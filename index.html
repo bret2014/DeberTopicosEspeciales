@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+  
+      <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+  
+  <form action="">
+      <table class="table table-dark">
+        <thead>
+    <tr>
+    <th scope="col"> <label for="nombre">Nombre</label></th>
+    <th scope="col"><input type="text" id="nombre"></th>
+    </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th scope="col">  <label for="mensaje">Mensaje</label></th>
+        <th scope="col"> <textarea id="mensaje"></textarea></th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+         <th scope="col"> <button type="button" class="btn btn-success" id="btnenviar">Enviar</button></th>
+      </tr>
+
+  </thead>
+  </table>
+  </form>
+
+
+  <ul id="chatul"> 
+    <li>
+     <b>Nombre: </b>Mensaje
+  
+    </li>
+    <li>
+      <b>Nombre: </b>Mensaje
+
+    </li>
+
+  </ul>
+
+
+
+      
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDyc4YIr0PXT5YTYu1j8KAKc09YEd-pTtg",
+        authDomain: "deberchatfirebase.firebaseapp.com",
+        databaseURL: "https://deberchatfirebase.firebaseio.com",
+        projectId: "deberchatfirebase",
+        storageBucket: "",
+        messagingSenderId: "57424520034",
+        appId: "1:57424520034:web:6fff2bfaca8f51d8"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+
+      var txtnombre = document.getElementById('nombre');
+      var txtmensaje = document.getElementById('mensaje');
+      var txtenviar = document.getElementById('enviar');
+      var chatul = document.getElementById('chatul');
+
+      btnenviar.addEventListener("click", function(){
+         var nombre = txtnombre.value;
+         var mensaje = txtmensaje.value;
+        txtmensaje= document.getElementById('');
+        
+
+        firebase.database().ref('chat').push({
+            name: nombre,
+            message: mensaje
+
+        });
+      });
+
+      firebase.database().ref('chat')
+      .on('value',function(snapshot){
+        var html ="<center><h2>Ultimos Chats en Linea</h2></center>";
+        snapshot.forEach(function(e){
+          var element=e.val();
+          var nombre = element.name;
+          var mensaje= element.message;
+          html += "<center><dl><li><b>"+nombre+": </b>"+mensaje+"</li></dl></center>";
+            
+        });
+        chatul.innerHTML = html;
+            
+
+        });
+
+
+    </script>
+
+</body>
+</html>
